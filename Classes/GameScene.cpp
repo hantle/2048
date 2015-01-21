@@ -6,13 +6,10 @@
 //
 //
 
-#include "cocos2d.h"
-#include "cocos-ext.h"
 #include "GameScene.h"
 #include "Define.h"
 
 USING_NS_CC;
-USING_NS_CC_EXT;
 
 Scene* GameScene::createScene()
 {
@@ -98,21 +95,6 @@ bool GameScene::init()
     listener->setSwallowTouches(true);
     listener->onTouchBegan = CC_CALLBACK_2(FlappyBird::onTouchBegan, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-
-    LayerColor *backgroundLayer = LayerColor::create(Color4B(180, 180, 22, 255));
-    backgroundLayer->setContentSize(Size(visibleSize.width - 40, visibleSize.width - 40));
-    backgroundLayer->setPosition(visibleSize.width/2 - backgroundLayer->getContentSize().width/2, visibleSize.height/2 - 50 - backgroundLayer->getContentSize().height/2);
-    this->addChild(backgroundLayer);
-
-    
-    
-    // draw blocks
-    auto block = Scale9Sprite::create("res/green_edit.png", Rect(0,0,28,28), Rect(5,5,18,18));
-    block->setPosition(Vec2(250, 250));
-    block->setContentSize(Size(28*2, 28*2));
-    this->addChild(block);
-    
-    
     
     
     return true;
