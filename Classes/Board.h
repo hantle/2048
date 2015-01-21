@@ -2,7 +2,6 @@
 #define __BOARD_H__
 
 #include "NumPad.h"
-#include "PadGen.h"
 #include "PadMover.h"
 #include "PadGen.h"
 using namespace std;

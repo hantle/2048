@@ -45,13 +45,11 @@ bool ButtonLayer::init()
     menuMenu->setPosition(visibleSize.width/6, 0);
     menuLeaderboard->setPosition(visibleSize.width/2, 0);
     
-    // Menu button BG
     LayerColor *layer = LayerColor::create(Color4B(0, 255, 255, 255));
     layer->setContentSize(Size(visibleSize.width/3, 100));
     layer->setPosition(visibleSize.width*2/3, visibleSize.height-150);
     this->addChild(layer);
     
-    // Leaderboard button BG
     LayerColor *layer1 = LayerColor::create(Color4B(255, 0, 255, 255));
     layer1->setContentSize(Size(visibleSize.width/3, 100));
     layer1->setPosition(visibleSize.width/3, visibleSize.height-150);
