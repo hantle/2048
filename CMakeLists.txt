@@ -113,15 +113,19 @@ include_directories(
   Classes
 )
 
+file(GLOB cpp_files
+		Classes/*.cpp)
+
+file(GLOB header_files
+		Classes/*.h)
+
 set(GAME_SRC
-  Classes/AppDelegate.cpp
-  Classes/MenuScene.cpp
+  ${cpp_files}  
   ${PLATFORM_SPECIFIC_SRC}
 )
 
 set(GAME_HEADERS
-  Classes/AppDelegate.h
-  Classes/MenuScene.h
+  ${header_files}
   ${PLATFORM_SPECIFIC_HEADERS}
 )
 

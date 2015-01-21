@@ -4,6 +4,7 @@
 #include "NumPad.h"
 #include "PadMover.h"
 #include "PadGen.h"
+
 using namespace std;
 
 class Board {
@@ -18,8 +19,8 @@ class Board {
 		void merge(NumPad *m, NumPad *d);
 		void genPad();
 	public:
-    static int _4BY4;// = 4;
-    static int _6BY6;// = 6;
+		static const int _4BY4 = 4;
+		static const int _6BY6 = 6;
 
 		Board(int size);
 		void setMover(PadMover *mover);
@@ -27,8 +28,9 @@ class Board {
 		void moveRight();
 		void moveUp();
 		void moveDown();
-    void setGen(PadGen *gen);
+		void setGen(PadGen *gen);
 	protected:
 		~Board() {};
 };
+
 #endif // __BOARD_H__

@@ -7,3 +7,4 @@ proj.win32/
 proj.win8.1-universal/
 proj.wp8-xaml/
 linux-build/
+bin/

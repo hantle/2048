@@ -3,6 +3,7 @@
 
 #include "Board.h"
 
+class Board;
 class PadGen {
 	public:
 		virtual void gen(Board *board) = 0;
