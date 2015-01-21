@@ -10,6 +10,7 @@
 #define ___048__GameScene__
 
 #include "cocos2d.h"
+#include "CocosGUI.h"
 #include "MenuScene.h"
 
 class GameScene : public cocos2d::Layer

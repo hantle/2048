@@ -10,6 +10,7 @@
 #define ___048__MenuScene__
 
 #include "cocos2d.h"
+#include "cocos-ext.h"
 #include "GameScene.h"
 
 class MenuScene : public cocos2d::Layer

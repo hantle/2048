@@ -4,6 +4,18 @@
 
 USING_NS_CC;
 
+// resolution settings
+typedef struct tagResource
+{
+    cocos2d::Size size;
+    char directory[100];
+}Resource;
+
+static Resource smallResource  =  { cocos2d::Size::Size(480, 320),   "iphone" };
+static Resource mediumResource =  { cocos2d::Size::Size(1024, 768),  "ipad"   };
+static Resource largeResource  =  { cocos2d::Size::Size(2048, 1536), "ipadhd" };
+static cocos2d::Size designResolutionSize = cocos2d::Size::Size(960, 640);
+
 AppDelegate::AppDelegate() {
 
 }
@@ -31,6 +43,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
         glview = GLViewImpl::create("My Game");
         director->setOpenGLView(glview);
     }
+    
+    glview->setDesignResolutionSize(designResolutionSize.height, designResolutionSize.width, ResolutionPolicy::SHOW_ALL);
 
     // turn on display FPS
     director->setDisplayStats(true);
