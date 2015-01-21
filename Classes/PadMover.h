@@ -4,6 +4,7 @@
 #include "Board.h"
 
 /* Abstract class for moving pad */
+class Board;
 class PadMover {
 	public:
 		virtual void moveLeft(Board *board) = 0;

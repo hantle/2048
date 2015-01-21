@@ -5,7 +5,7 @@
 
 class PadGen {
 	public:
-		virtual gen(Board *board) = 0;
+		virtual void gen(Board *board) = 0;
 };
 
 #endif // __PADGEN_H__
