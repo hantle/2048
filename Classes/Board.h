@@ -3,12 +3,12 @@
 
 #include "NumPad.h"
 #include "PadMover.h"
-
+#include "PadGen.h"
 using namespace std;
 
 class Board {
 	private:
-		NumPad *mBoard[][];
+		NumPad **mBoard;
 		int mSize;
 		PadMover *mMover;
 		PadGen *mGen;
@@ -18,8 +18,8 @@ class Board {
 		void merge(NumPad *m, NumPad *d);
 		void genPad();
 	public:
-		static int _4BY4 = 4;
-		static int _6BY6 = 6;
+    static int _4BY4;// = 4;
+    static int _6BY6;// = 6;
 
 		Board(int size);
 		void setMover(PadMover *mover);
@@ -27,7 +27,7 @@ class Board {
 		void moveRight();
 		void moveUp();
 		void moveDown();
-	
+    void setGen(PadGen *gen);
 	protected:
 		~Board() {};
 };

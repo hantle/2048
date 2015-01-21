@@ -9,7 +9,7 @@ Board::Board(int size)
 
 	mBoard = new NumPad*[size];
 	for(int i = 0 ; i < size ; i++) {
-		mBoard[i] = new NumPad*[size];
+		mBoard[i] = *new NumPad*[size];
 	}
 }
 
