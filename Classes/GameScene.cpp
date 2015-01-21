@@ -92,14 +92,13 @@ bool GameScene::init()
     this->addChild(menu, 100);
     
     
-<<<<<<< Updated upstream
     
     // Touch Events (Single)
     auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(true);
     listener->onTouchBegan = CC_CALLBACK_2(FlappyBird::onTouchBegan, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-=======
+
     LayerColor *backgroundLayer = LayerColor::create(Color4B(180, 180, 22, 255));
     backgroundLayer->setContentSize(Size(visibleSize.width - 40, visibleSize.width - 40));
     backgroundLayer->setPosition(visibleSize.width/2 - backgroundLayer->getContentSize().width/2, visibleSize.height/2 - 50 - backgroundLayer->getContentSize().height/2);
@@ -114,7 +113,6 @@ bool GameScene::init()
     this->addChild(block);
     
     
->>>>>>> Stashed changes
     
     
     return true;
