@@ -4,99 +4,94 @@
 
 Board::Board(int size) 
 {
-	mSize = size;
-	mMover = 0; 
+    mSize = size;
+    mMover = 0; 
 
-	mBoard = new NumPad*[size];
-	for(int i = 0 ; i < size ; i++) {
-		mBoard[i] = new NumPad[size];
-	}
+    mBoard = new NumPad*[size];
+    for(int i = 0 ; i < size ; i++) {
+        mBoard[i] = new NumPad[size];
+    }
 }
 
 Board::~Board()
 {
-	//
+    //
 }
 
 void Board::setMover(PadMover *mover) 
 {
-	mMover = mover;
+    mMover = mover;
 }
 
 void Board::setGen(PadGen *gen)
 {
-	mGen = gen;
+    mGen = gen;
 }
 
 int Board::moveLeft()
 {
-	if(mMover == 0) return 0;
-	return mMover->moveLeft(this);
+    if(mMover == 0) return 0;
+    return mMover->moveLeft(this);
 }
 
 int Board::moveRight()
 {
-	if(mMover == 0) return 0;
-	return mMover->moveRight(this);
+    if(mMover == 0) return 0;
+    return mMover->moveRight(this);
 }
 
 int Board::moveUp()
 {
-	if(mMover == 0) return 0;
-	return mMover->moveUp(this);
+    if(mMover == 0) return 0;
+    return mMover->moveUp(this);
 }
 
 int Board::moveDown()
 {
-	if(mMover == 0) return 0;
-	return mMover->moveDown(this);
+    if(mMover == 0) return 0;
+    return mMover->moveDown(this);
 }
 
 bool Board::tryMerge(NumPad *m, NumPad *d)
 {
-	if(m->mNum == d->mNum) return true;
-	return false;
+    if(m->mNum == d->mNum) return true;
+    return false;
 }
 
 int Board::merge(NumPad *m, NumPad *d)
 {
-	if(tryMerge(m, d))
-	{
-		m->mNum += d->mNum;
-		d->mNum = 0;
-	}
+    if(tryMerge(m, d))
+    {
+        m->mNum += d->mNum;
+        d->mNum = 0;
+    }
 }
 
 void Board::genPad()
 {
-	mGen->gen(this);
+    mGen->gen(this);
 }
 
 bool Board::isFinish()
 {
-	// check all neighbor pad
-	// if there is mergable pad, then return false
-	// this method should be invoked after isFull check
-	return false;
+    // check all neighbor pad
+    // if there is mergable pad, then return false
+    // this method should be invoked after isFull check
+    return false;
 }
 
 bool Board::isFull()
 {
-	// check board is full of numpad
-	return false;
-}
-
-NumPad& Board::operator[](int row)
-{
-	return *mBoard[row];
+    // check board is full of numpad
+    return false;
 }
 
 bool Board::doNext()
 {
-	genPad();
-	if(isFull()) {
-		if(isFinish()) return false;
-	}
-	return true;
+    genPad();
+    if(isFull()) {
+        if(isFinish()) return false;
+    }
+    return true;
 }
 

@@ -12,9 +12,12 @@
 #include "cocos2d.h"
 #include "CocosGUI.h"
 #include "MenuScene.h"
+#include "Board.h"
 
 class GameScene : public cocos2d::Layer
 {
+    private:
+        Board *board;
 public:
     static cocos2d::Scene* createScene();
     
@@ -25,7 +28,7 @@ public:
     
     
     void onMenu(Ref* pSender);
-	bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event);
+    bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event);
     CREATE_FUNC(GameScene);
 };
 

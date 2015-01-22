@@ -8,6 +8,7 @@
 
 #include "GameScene.h"
 #include "Define.h"
+#include "Board.h"
 
 USING_NS_CC;
 
@@ -36,6 +37,7 @@ bool GameScene::init()
         return false;
     }
     
+    board = new Board(Board::_6BY6);
     glClearColor(81.0/255.0, 192.0/255.0, 201.0/255.0, 1.0);
     
     Size visibleSize = Director::getInstance()->getVisibleSize();
@@ -71,15 +73,23 @@ bool GameScene::init()
     backgroundLayer->setPosition(visibleSize.width/2 - backgroundLayer->getContentSize().width/2, visibleSize.height/2 - 50 - backgroundLayer->getContentSize().height/2);
     this->addChild(backgroundLayer);
 
-    for (int i = 0; i < 16; i++) {
-        int x = 44+130*(i%4);
-        int y = 44+130*(i/4);
+    int size = board->getSize();
+    for (int i = 0; i < size * size; i++) {
+        int x = 44+(512/size + 2)*(i%size);
+        int y = 44+(512/size + 2)*(i/size);
         auto backgroundGrid = ui::Scale9Sprite::create(Rect(10, 10, 12, 12), "button64.png");
         backgroundGrid->setAnchorPoint(Point(0, 0));
-        backgroundGrid->setContentSize(Size(128, 128));
+        backgroundGrid->setContentSize(Size(512 / size, 512 / size));
         backgroundGrid->setPosition(x, y);
         backgroundGrid->setColor(kColorBackgroundGrid);
         backgroundLayer->addChild(backgroundGrid);
+
+        int num = board->getNumPad(i/size, i%size).mNum;
+        auto pad = LabelTTF::create(
+                String::createWithFormat("%d", num)->getCString(), 
+                kArial, 50);
+        pad->setPosition(x+512/size/2, y+512/size/2);
+        backgroundLayer->addChild(pad);
     }
 
     
