@@ -54,6 +54,7 @@ elseif(MACOSX OR APPLE)
   set(PLATFORM_FOLDER mac)
 elseif(LINUX)
   ADD_DEFINITIONS(-DLINUX)
+  ADD_DEFINITIONS(-fpermissive)
   set(PLATFORM_FOLDER linux)
 elseif(ANDROID)
   ADD_DEFINITIONS (-DUSE_FILE32API)
@@ -110,6 +111,10 @@ include_directories(
   /usr/local/include/GLFW
   /usr/include/GLFW
   ${COCOS2D_ROOT}/cocos
+  ${COCOS2D_ROOT}/cocos/ui
+  ${COCOS2D_ROOT}/external
+  ${COCOS2D_ROOT}/extensions
+  ${COCOS2D_ROOT}
   Classes
 )
 

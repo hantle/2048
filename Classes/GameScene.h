@@ -25,7 +25,7 @@ public:
     
     
     void onMenu(Ref* pSender);
-    
+	bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event);
     CREATE_FUNC(GameScene);
 };
 

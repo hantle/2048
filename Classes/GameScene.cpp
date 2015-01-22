@@ -93,7 +93,7 @@ bool GameScene::init()
     // Touch Events (Single)
     auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(true);
-    listener->onTouchBegan = CC_CALLBACK_2(FlappyBird::onTouchBegan, this);
+    listener->onTouchBegan = CC_CALLBACK_2(GameScene::onTouchBegan, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     
@@ -104,3 +104,9 @@ void GameScene::onMenu(Ref* pSender)
 {
     Director::getInstance()->replaceScene(MenuScene::createScene());
 }
+
+bool GameScene::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event)
+{
+	return true;
+}
+
