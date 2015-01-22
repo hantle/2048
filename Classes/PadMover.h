@@ -7,10 +7,10 @@
 class Board;
 class PadMover {
 	public:
-		virtual void moveLeft(Board *board) = 0;
-		virtual void moveRight(Board *board) = 0;
-		virtual void moveUp(Board *board) = 0;
-		virtual void moveDown(Board *board) = 0;
+		virtual int moveLeft(Board *board) = 0;
+		virtual int moveRight(Board *board) = 0;
+		virtual int moveUp(Board *board) = 0;
+		virtual int moveDown(Board *board) = 0;
 };
 
 #endif // __PADMOVER_H__
