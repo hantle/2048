@@ -38,7 +38,7 @@ class Board {
 
 		NumPad& operator[](int row);
 	protected:
-		~Board() {};
+		~Board();
 };
 
 #endif // __BOARD_H__

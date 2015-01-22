@@ -13,6 +13,11 @@ Board::Board(int size)
 	}
 }
 
+Board::~Board()
+{
+	//
+}
+
 void Board::setMover(PadMover *mover) 
 {
 	mMover = mover;
@@ -23,28 +28,28 @@ void Board::setGen(PadGen *gen)
 	mGen = gen;
 }
 
-void Board::moveLeft()
+int Board::moveLeft()
 {
-	if(mMover == 0) return;
-	mMover->moveLeft(this);
+	if(mMover == 0) return 0;
+	return mMover->moveLeft(this);
 }
 
-void Board::moveRight()
+int Board::moveRight()
 {
-	if(mMover == 0) return;
-	mMover->moveRight(this);
+	if(mMover == 0) return 0;
+	return mMover->moveRight(this);
 }
 
-void Board::moveUp()
+int Board::moveUp()
 {
-	if(mMover == 0) return;
-	mMover->moveUp(this);
+	if(mMover == 0) return 0;
+	return mMover->moveUp(this);
 }
 
-void Board::moveDown()
+int Board::moveDown()
 {
-	if(mMover == 0) return;
-	mMover->moveDown(this);
+	if(mMover == 0) return 0;
+	return mMover->moveDown(this);
 }
 
 bool Board::tryMerge(NumPad *m, NumPad *d)
