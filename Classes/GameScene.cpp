@@ -9,6 +9,7 @@
 #include "GameScene.h"
 #include "Define.h"
 #include "Board.h"
+#include "EasyPadGen.h"
 
 USING_NS_CC;
 
@@ -38,6 +39,11 @@ bool GameScene::init()
     }
     
     board = new Board(Board::_6BY6);
+    EasyPadGen *eGen = new EasyPadGen();
+    board->setGen(eGen);
+
+    board->reset();
+
     glClearColor(81.0/255.0, 192.0/255.0, 201.0/255.0, 1.0);
     
     Size visibleSize = Director::getInstance()->getVisibleSize();
@@ -47,7 +53,6 @@ bool GameScene::init()
     MenuItemFont *menuLeaderboard = MenuItemFont::create("LEADERBOARD", CC_CALLBACK_1(GameScene::onMenu, this));
     menuMenu->setPosition(visibleSize.width/6, 0);
     menuLeaderboard->setPosition(visibleSize.width/2, 0);
-    
     
     auto button1 = ui::Scale9Sprite::create(Rect(10,10,12,12), "button64.png");
     button1->setAnchorPoint(Point(0, 0));
@@ -61,7 +66,6 @@ bool GameScene::init()
     button2->setPosition(visibleSize.width*2/3, visibleSize.height-150);
     button2->setContentSize(Size(visibleSize.width/3, 100));
     this->addChild(button2);
-    
     
 //    auto background = ui::Scale9Sprite::create(Rect(10, 10, 12, 12), "button64.png");
 //    background->setAnchorPoint(Point(0, 0));
@@ -91,14 +95,11 @@ bool GameScene::init()
         pad->setPosition(x+512/size/2, y+512/size/2);
         backgroundLayer->addChild(pad);
     }
-
     
     auto menu = Menu::create(menuMenu, menuLeaderboard, NULL);
     menu->setContentSize(Size(visibleSize.width*2/3, 100));
     menu->setPosition(visibleSize.width/3, visibleSize.height - 100);
     this->addChild(menu, 100);
-    
-    
     
     // Touch Events (Single)
     auto listener = EventListenerTouchOneByOne::create();
@@ -106,8 +107,16 @@ bool GameScene::init()
     listener->onTouchBegan = CC_CALLBACK_2(GameScene::onTouchBegan, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
-    
+    // keyboard listener for testring in linux
+    auto key_listener = EventListenerKeyboard::create();
+    key_listener->onKeyReleased = CC_CALLBACK_2(GameScene::onKeyReleased, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(key_listener, this);
+
     return true;
+}
+
+void GameScene::drawPad(float dt)
+{
 }
 
 void GameScene::onMenu(Ref* pSender)
@@ -118,5 +127,23 @@ void GameScene::onMenu(Ref* pSender)
 bool GameScene::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event)
 {
 	return true;
+}
+
+void GameScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event)
+{
+    if(keyCode == cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW)
+    {
+        printf("Left Arrow Key released.\n");
+        board->moveLeft();
+        board->doNext();
+        
+        //this->scheduleOnce(CC_SCHEDULE_SELECTOR(GameScene::drawPad), 0);
+    }
+    else if(keyCode == cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
+    {
+        printf("Right Arrow Key released.\n");
+        board->moveRight();
+        board->doNext();
+    }
 }
 

@@ -6,6 +6,7 @@ Board::Board(int size)
 {
     mSize = size;
     mMover = 0; 
+    mGen = 0;
 
     mBoard = new NumPad*[size];
     for(int i = 0 ; i < size ; i++) {
@@ -16,6 +17,13 @@ Board::Board(int size)
 Board::~Board()
 {
     //
+}
+
+void Board::reset() 
+{
+    // initialize
+    genPad();
+    genPad();
 }
 
 void Board::setMover(PadMover *mover) 
@@ -69,6 +77,7 @@ int Board::merge(NumPad *m, NumPad *d)
 
 void Board::genPad()
 {
+    if(mGen == 0) return;
     mGen->gen(this);
 }
 

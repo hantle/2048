@@ -20,8 +20,10 @@ class Board {
         static const int _8BY8 = 8;
 
         Board(int size);
+        void reset();
         int getSize() { return mSize; };
         const NumPad getNumPad(int row, int col) { return mBoard[row][col]; }
+        void setNum(int row, int col, int val) { mBoard[row][col].mNum = val; }
         void setMover(PadMover *mover);
         /* merge two NumPad into one by adding d into m. 
            And then d will be removed */
@@ -38,7 +40,6 @@ class Board {
         bool isFinish();
         bool isFull();
 
-        NumPad& operator[](int row);
     protected:
         ~Board();
 };
