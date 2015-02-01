@@ -10,6 +10,7 @@
 #include "Define.h"
 #include "Board.h"
 #include "EasyPadGen.h"
+#include "EdgePadMover.h"
 
 USING_NS_CC;
 
@@ -40,8 +41,9 @@ bool GameScene::init()
     
     board = new Board(Board::_6BY6);
     EasyPadGen *eGen = new EasyPadGen();
+    EdgePadMover *eMover = new EdgePadMover();
     board->setGen(eGen);
-
+    board->setMover(eMover);
     board->reset();
 
     glClearColor(81.0/255.0, 192.0/255.0, 201.0/255.0, 1.0);
