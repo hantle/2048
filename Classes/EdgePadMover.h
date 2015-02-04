@@ -11,59 +11,15 @@ class Board;
 // but, now only move one for testing
 class EdgePadMover : public PadMover {
 	public:
-		int moveLeft(Board *board) 
-		{
-            int size = board->getSize();
+        EdgePadMover() {};
 
-            for(int r = 0 ; r < size ; r++) {
-                for(int c = 0 ; c < size ; c++) {
-                    NumPad pad1 = board->getNumPad(r, c);
-                    if(pad1.mNum != 0) {
-                        // check collision
-                        //
+		int moveLeft(Board *board);
+		int moveRight(Board *board);
+        int moveUp(Board *board);
+        int moveDown(Board *board);
 
-                        if(c == 0) continue;
-
-                        board->setNum(r, c - 1, pad1.mNum);
-                        board->setNum(r, c, 0);
-                    }
-                }
-            }
-
-            return 0;
-		};
-
-		int moveRight(Board *board) 
-		{
-            int size = board->getSize();
-
-            for(int r = 0 ; r < size ; r++) {
-                for(int c = size - 1 ; c >= 0 ; c--) {
-                    NumPad pad1 = board->getNumPad(r, c);
-                    if(pad1.mNum != 0) {
-                        // check collision
-                        //
-
-                        if(c == size - 1) continue;
-
-                        board->setNum(r, c + 1, pad1.mNum);
-                        board->setNum(r, c, 0);
-                    }
-                }
-            }
-
-            return 0;
-		};
-
-        int moveUp(Board *board)
-        {
-            return 0;
-        }
-
-        int moveDown(Board *board)
-        {
-            return 0;
-        }
+    protected:
+        ~EdgePadMover() {};
 };
 
 #endif // __EDGEPADMOVER_H__
