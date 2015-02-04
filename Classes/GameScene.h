@@ -12,21 +12,27 @@
 #include "cocos2d.h"
 #include "CocosGUI.h"
 #include "MenuScene.h"
+#include "Board.h"
 
 class GameScene : public cocos2d::Layer
 {
-public:
-    static cocos2d::Scene* createScene();
-    
-    virtual bool init();
-    
-    // Background
-    // Blocks
-    
-    
-    void onMenu(Ref* pSender);
-	bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event);
-    CREATE_FUNC(GameScene);
+    private:
+        Board *board;
+        Layer *backgroundLayer;
+    public:
+        static cocos2d::Scene* createScene();
+        
+        virtual bool init();
+        void drawPad(float dt);
+        
+        // Background
+        // Blocks
+        
+        
+        void onMenu(Ref* pSender);
+        bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event);
+        void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event);
+        CREATE_FUNC(GameScene);
 };
 
 #endif // __HELLOWORLD_SCENE_H__

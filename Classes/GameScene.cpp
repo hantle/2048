@@ -8,6 +8,9 @@
 
 #include "GameScene.h"
 #include "Define.h"
+#include "Board.h"
+#include "EasyPadGen.h"
+#include "EdgePadMover.h"
 
 USING_NS_CC;
 
@@ -36,6 +39,13 @@ bool GameScene::init()
         return false;
     }
     
+    board = new Board(Board::_6BY6);
+    EasyPadGen *eGen = new EasyPadGen();
+    EdgePadMover *eMover = new EdgePadMover();
+    board->setGen(eGen);
+    board->setMover(eMover);
+    board->reset();
+
     glClearColor(81.0/255.0, 192.0/255.0, 201.0/255.0, 1.0);
     
     Size visibleSize = Director::getInstance()->getVisibleSize();
@@ -45,7 +55,6 @@ bool GameScene::init()
     MenuItemFont *menuLeaderboard = MenuItemFont::create("LEADERBOARD", CC_CALLBACK_1(GameScene::onMenu, this));
     menuMenu->setPosition(visibleSize.width/6, 0);
     menuLeaderboard->setPosition(visibleSize.width/2, 0);
-    
     
     auto button1 = ui::Scale9Sprite::create(Rect(10,10,12,12), "button64.png");
     button1->setAnchorPoint(Point(0, 0));
@@ -60,35 +69,22 @@ bool GameScene::init()
     button2->setContentSize(Size(visibleSize.width/3, 100));
     this->addChild(button2);
     
-    
 //    auto background = ui::Scale9Sprite::create(Rect(10, 10, 12, 12), "button64.png");
 //    background->setAnchorPoint(Point(0, 0));
 //    background->setContentSize(Size(130 * 4 + 10, 130 * 4 + 10));
 //    background->setPosition(<#const cocos2d::Vec2 &position#>)
     
-    LayerColor *backgroundLayer = LayerColor::create(kColorBackground);
+    backgroundLayer = LayerColor::create(kColorBackground);
     backgroundLayer->setContentSize(Size(visibleSize.width - 40, visibleSize.width - 40));
     backgroundLayer->setPosition(visibleSize.width/2 - backgroundLayer->getContentSize().width/2, visibleSize.height/2 - 50 - backgroundLayer->getContentSize().height/2);
     this->addChild(backgroundLayer);
 
-    for (int i = 0; i < 16; i++) {
-        int x = 44+130*(i%4);
-        int y = 44+130*(i/4);
-        auto backgroundGrid = ui::Scale9Sprite::create(Rect(10, 10, 12, 12), "button64.png");
-        backgroundGrid->setAnchorPoint(Point(0, 0));
-        backgroundGrid->setContentSize(Size(128, 128));
-        backgroundGrid->setPosition(x, y);
-        backgroundGrid->setColor(kColorBackgroundGrid);
-        backgroundLayer->addChild(backgroundGrid);
-    }
-
+    drawPad(0);
     
     auto menu = Menu::create(menuMenu, menuLeaderboard, NULL);
     menu->setContentSize(Size(visibleSize.width*2/3, 100));
     menu->setPosition(visibleSize.width/3, visibleSize.height - 100);
     this->addChild(menu, 100);
-    
-    
     
     // Touch Events (Single)
     auto listener = EventListenerTouchOneByOne::create();
@@ -96,8 +92,38 @@ bool GameScene::init()
     listener->onTouchBegan = CC_CALLBACK_2(GameScene::onTouchBegan, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
-    
+    // keyboard listener for testring in linux
+    auto key_listener = EventListenerKeyboard::create();
+    key_listener->onKeyReleased = CC_CALLBACK_2(GameScene::onKeyReleased, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(key_listener, this);
+
     return true;
+}
+
+void GameScene::drawPad(float dt)
+{
+    int size = board->getSize();
+
+    backgroundLayer->removeAllChildren();
+
+    for (int i = 0; i < size * size; i++) {
+        int x = 44+(512/size + 2)*(i%size);
+        int y = 44+(512/size + 2)*(i/size);
+
+        auto backgroundGrid = ui::Scale9Sprite::create(Rect(10, 10, 12, 12), "button64.png");
+        backgroundGrid->setAnchorPoint(Point(0, 0));
+        backgroundGrid->setContentSize(Size(512 / size, 512 / size));
+        backgroundGrid->setPosition(x, y);
+        backgroundGrid->setColor(kColorBackgroundGrid);
+        backgroundLayer->addChild(backgroundGrid);
+
+        int num = board->getNumPad(i/size, i%size).mNum;
+        auto pad = LabelTTF::create(
+                String::createWithFormat("%d", num)->getCString(), 
+                kArial, 50);
+        pad->setPosition(x+512/size/2, y+512/size/2);
+        backgroundLayer->addChild(pad);
+    }
 }
 
 void GameScene::onMenu(Ref* pSender)
@@ -108,5 +134,41 @@ void GameScene::onMenu(Ref* pSender)
 bool GameScene::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event)
 {
 	return true;
+}
+
+void GameScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event)
+{
+    if(keyCode == cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW)
+    {
+        printf("Left Arrow Key released.\n");
+        board->moveLeft();
+        board->doNext();
+        
+        this->scheduleOnce(CC_SCHEDULE_SELECTOR(GameScene::drawPad), 0);
+    }
+    else if(keyCode == cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
+    {
+        printf("Right Arrow Key released.\n");
+        board->moveRight();
+        board->doNext();
+
+        this->scheduleOnce(CC_SCHEDULE_SELECTOR(GameScene::drawPad), 0);
+    }
+    else if(keyCode == cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW)
+    {
+        printf("Right Arrow Key released.\n");
+        board->moveUp();
+        board->doNext();
+
+        this->scheduleOnce(CC_SCHEDULE_SELECTOR(GameScene::drawPad), 0);
+    }
+    else if(keyCode == cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW)
+    {
+        printf("Right Arrow Key released.\n");
+        board->moveDown();
+        board->doNext();
+
+        this->scheduleOnce(CC_SCHEDULE_SELECTOR(GameScene::drawPad), 0);
+    }
 }
 
