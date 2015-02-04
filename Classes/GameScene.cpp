@@ -118,10 +118,15 @@ void GameScene::drawPad(float dt)
         backgroundLayer->addChild(backgroundGrid);
 
         int num = board->getNumPad(i/size, i%size).mNum;
-        auto pad = LabelTTF::create(
+        auto pad = LabelTTF::create("", kArial, 50);
+
+        if(num != 0) {
+            pad = LabelTTF::create(
                 String::createWithFormat("%d", num)->getCString(), 
                 kArial, 50);
+        }
         pad->setPosition(x+512/size/2, y+512/size/2);
+
         backgroundLayer->addChild(pad);
     }
 }
