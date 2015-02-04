@@ -14,7 +14,7 @@
 #define kMenuFontSize 50
 #define kAnimationSpeed 0.2
 
-#define kColorBackground Color4B(186, 169, 153, 255)
+#define kColorBackground Color3B(186, 169, 153)
 #define kColorBackgroundGrid Color3B(207, 197, 183)
 
 #endif
