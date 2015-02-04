@@ -9,3 +9,4 @@ proj.wp8-xaml/
 linux-build/
 bin/
 *.swp
+*.swo
