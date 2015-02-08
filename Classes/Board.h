@@ -36,7 +36,7 @@ class Board {
 
         // should be called after move
         // it return false when game was finished
-        bool doNext();
+        bool doNext(bool gen);
         bool isFinish();
         bool isFull();
 

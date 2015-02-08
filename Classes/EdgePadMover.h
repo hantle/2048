@@ -10,6 +10,9 @@ class Board;
 // Egde means this PadMover move all pad to end to end
 // but, now only move one for testing
 class EdgePadMover : public PadMover {
+    private:
+        int calcPoint(int point, bool move);
+
 	public:
         EdgePadMover() {};
 

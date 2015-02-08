@@ -1,10 +1,21 @@
 #include "Board.h"
 #include "EdgePadMover.h"
 
+// -1 == no move at all
+// > 0 == move
+int EdgePadMover::calcPoint(int point, bool move)
+{
+    if(point == -1 && move) point = 0;
+    else if(point > 0) point += 1;
+
+    return point;
+}
+
 int EdgePadMover::moveLeft(Board *board)
 {
     int size = board->getSize();
-    int point = 0;
+    bool move = false;
+    int point = -1;
 
     for(int r = 0 ; r < size ; r++) {
         for(int c = 0 ; c < size ; c++) {
@@ -12,8 +23,8 @@ int EdgePadMover::moveLeft(Board *board)
             if(pad1.mNum != 0) {
                 if(c == 0) continue;
 
-                // check collision
                 NumPad pad2 = board->getNumPad(r, c - 1);
+                // check collision
                 if(pad2.mNum != 0 && pad2.mNum == pad1.mNum) 
                 {
                     board->setNum(r, c - 1, pad1.mNum + pad2.mNum);
@@ -23,21 +34,25 @@ int EdgePadMover::moveLeft(Board *board)
                     continue;
                 }
 
+                // no move
                 if(pad2.mNum != 0 && pad2.mNum != pad1.mNum) continue;
 
+                // move
                 board->setNum(r, c - 1, pad1.mNum);
                 board->setNum(r, c, 0);
+                move = true;
             }
         }
     }
 
-    return 0;
+    return calcPoint(point, move);
 };
 
 int EdgePadMover::moveRight(Board *board) 
 {
     int size = board->getSize();
-    int point = 0;
+    bool move = false;
+    int point = -1;
 
     for(int r = 0 ; r < size ; r++) {
         for(int c = size - 1 ; c >= 0 ; c--) {
@@ -60,17 +75,19 @@ int EdgePadMover::moveRight(Board *board)
 
                 board->setNum(r, c + 1, pad1.mNum);
                 board->setNum(r, c, 0);
+                move = true;
             }
         }
     }
 
-    return point;
+    return calcPoint(point, move);
 };
 
 int EdgePadMover::moveUp(Board *board)
 {
     int size = board->getSize();
-    int point = 0;
+    bool move = false;
+    int point = -1;
 
     for(int c = 0 ; c < size ; c++) {
         for(int r = size - 1 ; r >= 0 ; r--) {
@@ -93,17 +110,19 @@ int EdgePadMover::moveUp(Board *board)
 
                 board->setNum(r + 1, c, pad1.mNum);
                 board->setNum(r, c, 0);
+                move = true;
             }
         }
     }
 
-    return point;
+    return calcPoint(point, move);
 }
 
 int EdgePadMover::moveDown(Board *board)
 {
     int size = board->getSize();
-    int point = 0;
+    bool move = false;
+    int point = -1;
 
     for(int c = 0 ; c < size ; c++) {
         for(int r = 0 ; r < size ; r++) {
@@ -126,9 +145,10 @@ int EdgePadMover::moveDown(Board *board)
 
                 board->setNum(r - 1, c, pad1.mNum);
                 board->setNum(r, c, 0);
+                move = true;
             }
         }
     }
 
-    return point;
+    return calcPoint(point, move);
 }

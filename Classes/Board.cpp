@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include "Board.h"
 #include "PadMover.h"
 #include "NumPad.h"
@@ -83,24 +85,59 @@ void Board::genPad()
 
 bool Board::isFinish()
 {
+    bool finish = true;
     // check all neighbor pad
     // if there is mergable pad, then return false
     // this method should be invoked after isFull check
-    return false;
+    for(int r = 0 ; r < mSize ; r++) {
+        for(int c = 1 ; c < mSize ; c++) {
+            if(mBoard[r][c].mNum == mBoard[r][c-1].mNum) {
+                finish = false;
+                break;
+            }
+        }
+    }
+
+    for(int c = 0 ; c < mSize ; c++) {
+        for(int r = 1 ; r < mSize ; r++) {
+            if(mBoard[r][c].mNum == mBoard[r-1][c].mNum) {
+                finish = false;
+                break;
+            }
+        }
+    }
+    return finish;
 }
 
 bool Board::isFull()
 {
-    // check board is full of numpad
-    return false;
+    bool full = true;
+
+    for(int i = 0 ; i < mSize ; i++) {
+        for(int j = 0 ; j < mSize ; j++) {
+            if(mBoard[i][j].mNum == 0) {
+                full = false;
+                break;
+            }
+        }
+    }
+    return full;
 }
 
-bool Board::doNext()
+bool Board::doNext(bool gen)
 {
-    genPad();
     if(isFull()) {
+        printf("isFull() return true\n");
         if(isFinish()) return false;
+    } else {
+        if(gen) {
+            genPad();
+            // check full again after genPad()
+            if(isFull()) {
+                printf("isFull() return true\n");
+                if(isFinish()) return false;
+            }
+        }
     }
     return true;
 }
-

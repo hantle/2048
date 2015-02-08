@@ -39,7 +39,7 @@ bool GameScene::init()
         return false;
     }
     
-    board = new Board(Board::_6BY6);
+    board = new Board(Board::_4BY4);
     EasyPadGen *eGen = new EasyPadGen();
     EdgePadMover *eMover = new EdgePadMover();
     board->setGen(eGen);
@@ -143,37 +143,45 @@ bool GameScene::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event
 
 void GameScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event)
 {
+    bool isGameOver = false;
+    int point = 0;
     if(keyCode == cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW)
     {
         printf("Left Arrow Key released.\n");
-        board->moveLeft();
-        board->doNext();
+        point = board->moveLeft();
+        // if point == -1 then no gen
+        isGameOver = !(board->doNext((point == -1) ? false : true));
         
         this->scheduleOnce(CC_SCHEDULE_SELECTOR(GameScene::drawPad), 0);
     }
     else if(keyCode == cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
     {
         printf("Right Arrow Key released.\n");
-        board->moveRight();
-        board->doNext();
+        point = board->moveRight();
+        isGameOver = !(board->doNext((point == -1) ? false : true));
 
         this->scheduleOnce(CC_SCHEDULE_SELECTOR(GameScene::drawPad), 0);
     }
     else if(keyCode == cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW)
     {
-        printf("Right Arrow Key released.\n");
-        board->moveUp();
-        board->doNext();
+        printf("Up Arrow Key released.\n");
+        point = board->moveUp();
+        isGameOver = !(board->doNext((point == -1) ? false : true));
 
         this->scheduleOnce(CC_SCHEDULE_SELECTOR(GameScene::drawPad), 0);
     }
     else if(keyCode == cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW)
     {
-        printf("Right Arrow Key released.\n");
-        board->moveDown();
-        board->doNext();
+        printf("Down Arrow Key released.\n");
+        point = board->moveDown();
+        isGameOver = !(board->doNext((point == -1) ? false : true));
 
         this->scheduleOnce(CC_SCHEDULE_SELECTOR(GameScene::drawPad), 0);
+    }
+
+    if(isGameOver) {
+        printf("Game Over!!!\n");
+        // do something
     }
 }
 
