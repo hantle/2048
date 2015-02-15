@@ -23,6 +23,7 @@ class GameScene : public cocos2d::Layer
         static cocos2d::Scene* createScene();
         
         virtual bool init();
+        void initPad();
         void drawPad(float dt);
         
         // Background

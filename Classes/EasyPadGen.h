@@ -1,6 +1,9 @@
 #ifndef __EASYPADGEN_H__
 #define __EASYPADGEN_H__
 
+#include <time.h>
+#include <stdlib.h>
+
 #include "PadGen.h"
 #include "Board.h"
 
@@ -13,14 +16,15 @@ class EasyPadGen : public PadGen {
             int size = board->getSize();
             int r, c;
 
+            srand(time(NULL));
             while(true) 
             {
-                r = random() % size;
-                c = random() % size;
+                r = rand() % size;
+                c = rand() % size;
 
-                NumPad pad = board->getNumPad(r, c);
+                const NumPad *pad = board->getNumPad(r, c);
 
-                if(pad.mNum == 0)
+                if(pad->mNum == 0)
                     break;
             }
             printf("genPad at (%d, %d)\n", r, c);

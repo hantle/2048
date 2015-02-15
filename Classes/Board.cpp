@@ -1,8 +1,6 @@
 #include <stdio.h>
 
 #include "Board.h"
-#include "PadMover.h"
-#include "NumPad.h"
 
 Board::Board(int size) 
 {
@@ -10,9 +8,12 @@ Board::Board(int size)
     mMover = 0; 
     mGen = 0;
 
-    mBoard = new NumPad*[size];
+    mBoard = new pNumPad*[size];
     for(int i = 0 ; i < size ; i++) {
-        mBoard[i] = new NumPad[size];
+        mBoard[i] = new pNumPad[size];
+        for(int j = 0 ; j < size ; j++) {
+            NumPad *pad = mBoard[i][j] = new NumPad();
+        }
     }
 }
 
@@ -91,7 +92,7 @@ bool Board::isFinish()
     // this method should be invoked after isFull check
     for(int r = 0 ; r < mSize ; r++) {
         for(int c = 1 ; c < mSize ; c++) {
-            if(mBoard[r][c].mNum == mBoard[r][c-1].mNum) {
+            if(mBoard[r][c]->mNum == mBoard[r][c-1]->mNum) {
                 finish = false;
                 break;
             }
@@ -100,7 +101,7 @@ bool Board::isFinish()
 
     for(int c = 0 ; c < mSize ; c++) {
         for(int r = 1 ; r < mSize ; r++) {
-            if(mBoard[r][c].mNum == mBoard[r-1][c].mNum) {
+            if(mBoard[r][c]->mNum == mBoard[r-1][c]->mNum) {
                 finish = false;
                 break;
             }
@@ -115,7 +116,7 @@ bool Board::isFull()
 
     for(int i = 0 ; i < mSize ; i++) {
         for(int j = 0 ; j < mSize ; j++) {
-            if(mBoard[i][j].mNum == 0) {
+            if(mBoard[i][j]->mNum == 0) {
                 full = false;
                 break;
             }

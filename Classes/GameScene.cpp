@@ -79,7 +79,7 @@ bool GameScene::init()
     backgroundLayer->setPosition(visibleSize.width/2 - backgroundLayer->getContentSize().width/2, visibleSize.height/2 - 50 - backgroundLayer->getContentSize().height/2);
     this->addChild(backgroundLayer);
 
-    drawPad(0);
+    initPad();
     
     auto menu = Menu::create(menuMenu, menuLeaderboard, NULL);
     menu->setContentSize(Size(visibleSize.width*2/3, 100));
@@ -100,34 +100,48 @@ bool GameScene::init()
     return true;
 }
 
-void GameScene::drawPad(float dt)
+void GameScene::initPad()
 {
     int size = board->getSize();
-
-    backgroundLayer->removeAllChildren();
-
     for (int i = 0; i < size * size; i++) {
         int x = 44+(512/size + 2)*(i%size);
         int y = 44+(512/size + 2)*(i/size);
 
-        auto backgroundGrid = ui::Scale9Sprite::create(Rect(10, 10, 12, 12), "button64.png");
-        backgroundGrid->setAnchorPoint(Point(0, 0));
-        backgroundGrid->setContentSize(Size(512 / size, 512 / size));
-        backgroundGrid->setPosition(x, y);
-        backgroundGrid->setColor(kColorBackgroundGrid);
-        backgroundLayer->addChild(backgroundGrid);
+        const NumPad *pad = board->getNumPad(i/size, i%size);
+        auto grid = pad->getSprite();
 
-        int num = board->getNumPad(i/size, i%size).mNum;
-        auto pad = LabelTTF::create("", kArial, 50);
+        grid->setAnchorPoint(Point(0, 0));
+        grid->setContentSize(Size(512 / size, 512 / size));
+        grid->setPosition(x, y);
+        grid->setColor(kColorBackgroundGrid);
+        backgroundLayer->addChild(grid);
 
+        int num = pad->mNum;
+        auto label = pad->getLabel();
         if(num != 0) {
-            pad = LabelTTF::create(
-                String::createWithFormat("%d", num)->getCString(), 
-                kArial, 50);
+            label->setString(String::createWithFormat("%d", num)->getCString());
         }
-        pad->setPosition(x+512/size/2, y+512/size/2);
+        label->setPosition(x+512/size/2, y+512/size/2);
+        backgroundLayer->addChild(label);
+    }
+}
 
-        backgroundLayer->addChild(pad);
+void GameScene::drawPad(float dt)
+{
+    int size = board->getSize();
+
+    for (int i = 0; i < size * size; i++) {
+        const NumPad *pad = board->getNumPad(i/size, i%size);
+        auto grid = pad->getSprite();
+        grid->setColor(kColorBackgroundGrid);
+
+        int num = pad->mNum;
+        auto label = pad->getLabel();
+        if(num != 0) {
+            label->setString(String::createWithFormat("%d", num)->getCString());
+        } else {
+            label->setString("");
+        }
     }
 }
 
