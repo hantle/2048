@@ -3,7 +3,7 @@
 NumPad::NumPad() 
 {
     padSprite = ui::Scale9Sprite::create(Rect(10, 10, 12, 12), "button64.png");
-    numSprite = LabelTTF::create("", kArial, 50);
+    numSprite = Label::createWithTTF("", kMarkerFelt, 50);
 
     mNum = 0;
 }
@@ -17,6 +17,6 @@ NumPad::NumPad(const NumPad&  np)
 
 NumPad::~NumPad()
 {
-    if(padSprite != 0) delete padSprite;
-    if(numSprite != 0) delete numSprite;
+    if(padSprite != 0) padSprite->release();
+    if(numSprite != 0) numSprite->release();
 }

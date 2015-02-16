@@ -10,7 +10,7 @@ USING_NS_CC;
 class NumPad {
     private:
         ui::Scale9Sprite *padSprite;
-        LabelTTF *numSprite;
+        Label *numSprite;
 
     public:
         int mNum = 0;
@@ -18,7 +18,7 @@ class NumPad {
         NumPad();
         NumPad(const NumPad& np);
         ui::Scale9Sprite *getSprite() { return padSprite; };
-        LabelTTF *getLabel() { return numSprite; };
+        Label *getLabel() { return numSprite; };
 
     public:
         ~NumPad();

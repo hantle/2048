@@ -107,7 +107,7 @@ void GameScene::initPad()
         int x = 44+(512/size + 2)*(i%size);
         int y = 44+(512/size + 2)*(i/size);
 
-        const NumPad *pad = board->getNumPad(i/size, i%size);
+        NumPad *pad = board->getNumPad(i/size, i%size);
         auto grid = pad->getSprite();
 
         grid->setAnchorPoint(Point(0, 0));
@@ -131,7 +131,7 @@ void GameScene::drawPad(float dt)
     int size = board->getSize();
 
     for (int i = 0; i < size * size; i++) {
-        const NumPad *pad = board->getNumPad(i/size, i%size);
+        NumPad *pad = board->getNumPad(i/size, i%size);
         auto grid = pad->getSprite();
         grid->setColor(kColorBackgroundGrid);
 
