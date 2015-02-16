@@ -11,6 +11,28 @@ int EdgePadMover::calcPoint(int point, bool move)
     return point;
 }
 
+// return
+// -1 no move
+// 0 move
+// > 0 merged
+int EdgePadMover::checkMove(Board *board, int r1, int c1, int r2, int c2)
+{
+    NumPad *pad1 = board->getNumPad(r1, c1);
+    NumPad *pad2 = board->getNumPad(r2, c2);
+
+    if(pad1->mNum == 0) return -1;
+
+    if(pad2->mNum == 0) {
+        board->setNum(r2, c2, pad1->mNum);
+        board->setNum(r1, c1, 0);
+        return 0;
+    }
+
+    int p = board->merge(pad2, pad1);
+    if(p > 0) return p;
+    else return -1;
+}
+
 int EdgePadMover::moveLeft(Board *board)
 {
     int size = board->getSize();
@@ -19,29 +41,16 @@ int EdgePadMover::moveLeft(Board *board)
 
     for(int r = 0 ; r < size ; r++) {
         for(int c = 0 ; c < size ; c++) {
-            const NumPad *pad1 = board->getNumPad(r, c);
-            if(pad1->mNum != 0) {
-                if(c == 0) continue;
+            if(c == 0) continue;
 
-                const NumPad *pad2 = board->getNumPad(r, c - 1);
-                // check collision
-                if(pad2->mNum != 0 && pad2->mNum == pad1->mNum) 
-                {
-                    board->setNum(r, c - 1, pad1->mNum + pad2->mNum);
-                    board->setNum(r, c, 0);
-                    point += pad2->mNum;
+            int ret = checkMove(board, r, c, r, c-1);
 
-                    continue;
-                }
-
-                // no move
-                if(pad2->mNum != 0 && pad2->mNum != pad1->mNum) continue;
-
-                // move
-                board->setNum(r, c - 1, pad1->mNum);
-                board->setNum(r, c, 0);
+            if(ret == -1) continue;
+            if(ret == 0) {
                 move = true;
+                continue;
             }
+            if(ret > 0) point += ret;
         }
     }
 
@@ -56,27 +65,16 @@ int EdgePadMover::moveRight(Board *board)
 
     for(int r = 0 ; r < size ; r++) {
         for(int c = size - 1 ; c >= 0 ; c--) {
-            const NumPad *pad1 = board->getNumPad(r, c);
-            if(pad1->mNum != 0) {
-                if(c == size - 1) continue;
+            if(c == size - 1) continue;
 
-                // check collision
-                const NumPad *pad2 = board->getNumPad(r, c + 1);
-                if(pad2->mNum != 0 && pad2->mNum == pad1->mNum) 
-                {
-                    board->setNum(r, c + 1, pad1->mNum + pad2->mNum);
-                    board->setNum(r, c, 0);
-                    point += pad2->mNum;
+            int ret = checkMove(board, r, c, r, c+1);
 
-                    continue;
-                }
-
-                if(pad2->mNum != 0 && pad2->mNum != pad1->mNum) continue;
-
-                board->setNum(r, c + 1, pad1->mNum);
-                board->setNum(r, c, 0);
+            if(ret == -1) continue;
+            if(ret == 0) {
                 move = true;
+                continue;
             }
+            if(ret > 0) point += ret;
         }
     }
 
@@ -91,27 +89,16 @@ int EdgePadMover::moveUp(Board *board)
 
     for(int c = 0 ; c < size ; c++) {
         for(int r = size - 1 ; r >= 0 ; r--) {
-            const NumPad *pad1 = board->getNumPad(r, c);
-            if(pad1->mNum != 0) {
-                if(r == size - 1) continue;
+            if(r == size - 1) continue;
 
-                // check collision
-                const NumPad *pad2 = board->getNumPad(r + 1, c);
-                if(pad2->mNum != 0 && pad2->mNum == pad1->mNum) 
-                {
-                    board->setNum(r + 1, c, pad1->mNum + pad2->mNum);
-                    board->setNum(r, c, 0);
-                    point += pad2->mNum;
+            int ret = checkMove(board, r, c, r+1, c);
 
-                    continue;
-                }
-
-                if(pad2->mNum != 0 && pad2->mNum != pad1->mNum) continue;
-
-                board->setNum(r + 1, c, pad1->mNum);
-                board->setNum(r, c, 0);
+            if(ret == -1) continue;
+            if(ret == 0) {
                 move = true;
+                continue;
             }
+            if(ret > 0) point += ret;
         }
     }
 
@@ -126,27 +113,16 @@ int EdgePadMover::moveDown(Board *board)
 
     for(int c = 0 ; c < size ; c++) {
         for(int r = 0 ; r < size ; r++) {
-            const NumPad *pad1 = board->getNumPad(r, c);
-            if(pad1->mNum != 0) {
-                if(r == 0) continue;
+            if(r == 0) continue;
 
-                // check collision
-                const NumPad *pad2 = board->getNumPad(r - 1, c);
-                if(pad2->mNum != 0 && pad2->mNum == pad1->mNum) 
-                {
-                    board->setNum(r - 1, c, pad1->mNum + pad2->mNum);
-                    board->setNum(r, c, 0);
-                    point += pad2->mNum;
+            int ret = checkMove(board, r, c, r-1, c);
 
-                    continue;
-                }
-
-                if(pad2->mNum != 0 && pad2->mNum != pad1->mNum) continue;
-
-                board->setNum(r - 1, c, pad1->mNum);
-                board->setNum(r, c, 0);
+            if(ret == -1) continue;
+            if(ret == 0) {
                 move = true;
+                continue;
             }
+            if(ret > 0) point += ret;
         }
     }
 

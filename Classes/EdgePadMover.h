@@ -11,6 +11,7 @@ class Board;
 // but, now only move one for testing
 class EdgePadMover : public PadMover {
     private:
+        int checkMove(Board *board, int r1, int c1, int r2, int c2);
         int calcPoint(int point, bool move);
 
 	public:

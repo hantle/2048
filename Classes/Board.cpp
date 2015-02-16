@@ -65,7 +65,7 @@ int Board::moveDown()
 
 bool Board::tryMerge(NumPad *m, NumPad *d)
 {
-    if(m->mNum == d->mNum) return true;
+    if(m->mNum == d->mNum && m->mNum != 0) return true;
     return false;
 }
 
@@ -75,7 +75,11 @@ int Board::merge(NumPad *m, NumPad *d)
     {
         m->mNum += d->mNum;
         d->mNum = 0;
+
+        return 2;
     }
+
+    return 0;
 }
 
 void Board::genPad()
