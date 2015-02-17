@@ -21,6 +21,8 @@ class Board {
         static const int _6BY6 = 6;
         static const int _8BY8 = 8;
 
+        static int BASE;
+
         Board(int size);
         void reset();
         int getSize() { return mSize; };

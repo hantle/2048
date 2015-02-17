@@ -24,11 +24,8 @@ class GameScene : public cocos2d::Layer
         
         virtual bool init();
         void initPad();
-        void drawPad(float dt);
-        
         // Background
         // Blocks
-        
         
         void onMenu(Ref* pSender);
         bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event);

@@ -120,24 +120,6 @@ void GameScene::initPad()
     }
 }
 
-void GameScene::drawPad(float dt)
-{
-    int size = board->getSize();
-
-    for (int i = 0; i < size * size; i++) {
-        NumPad *pad = board->getNumPad(i/size, i%size);
-        auto grid = pad->getSprite();
-
-        int num = pad->getNum();
-        auto label = pad->getLabel();
-        if(num != 0) {
-            label->setString(String::createWithFormat("%d", num)->getCString());
-        } else {
-            label->setString("");
-        }
-    }
-}
-
 void GameScene::onMenu(Ref* pSender)
 {
     Director::getInstance()->replaceScene(MenuScene::createScene());
@@ -158,32 +140,24 @@ void GameScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
         point = board->moveLeft();
         // if point == -1 then no gen
         isGameOver = !(board->doNext((point == -1) ? false : true));
-        
-        this->scheduleOnce(CC_SCHEDULE_SELECTOR(GameScene::drawPad), 0);
     }
     else if(keyCode == cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
     {
         printf("Right Arrow Key released.\n");
         point = board->moveRight();
         isGameOver = !(board->doNext((point == -1) ? false : true));
-
-        this->scheduleOnce(CC_SCHEDULE_SELECTOR(GameScene::drawPad), 0);
     }
     else if(keyCode == cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW)
     {
         printf("Up Arrow Key released.\n");
         point = board->moveUp();
         isGameOver = !(board->doNext((point == -1) ? false : true));
-
-        this->scheduleOnce(CC_SCHEDULE_SELECTOR(GameScene::drawPad), 0);
     }
     else if(keyCode == cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW)
     {
         printf("Down Arrow Key released.\n");
         point = board->moveDown();
         isGameOver = !(board->doNext((point == -1) ? false : true));
-
-        this->scheduleOnce(CC_SCHEDULE_SELECTOR(GameScene::drawPad), 0);
     }
 
     if(isGameOver) {

@@ -6,6 +6,7 @@ NumPad::NumPad()
 {
     padSprite = ui::Scale9Sprite::create(Rect(10, 10, 12, 12), "button64.png");
     padSprite->setColor(kColorBackgroundGrid);
+    padSprite->setCascadeOpacityEnabled(true);
     numSprite = Label::createWithTTF("", kMarkerFelt, 50);
 
     mNum = 0;
@@ -28,6 +29,12 @@ NumPad::~NumPad()
 void NumPad::setNum(int num)
 {
     mNum = num;
+
+    if(num != 0) {
+        numSprite->setString(String::createWithFormat("%d", num)->getCString());
+    } else {
+        numSprite->setString("");
+    }
 
     // change pad color
     if(num == 0)

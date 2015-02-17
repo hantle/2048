@@ -2,6 +2,8 @@
 
 #include "Board.h"
 
+int Board::BASE = 2;
+
 Board::Board(int size) 
 {
     mSize = size;
