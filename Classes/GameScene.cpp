@@ -116,7 +116,7 @@ void GameScene::initPad()
         grid->setColor(kColorBackgroundGrid);
         backgroundLayer->addChild(grid);
 
-        int num = pad->mNum;
+        int num = pad->getNum();
         auto label = pad->getLabel();
         if(num != 0) {
             label->setString(String::createWithFormat("%d", num)->getCString());
@@ -135,7 +135,7 @@ void GameScene::drawPad(float dt)
         auto grid = pad->getSprite();
         grid->setColor(kColorBackgroundGrid);
 
-        int num = pad->mNum;
+        int num = pad->getNum();
         auto label = pad->getLabel();
         if(num != 0) {
             label->setString(String::createWithFormat("%d", num)->getCString());

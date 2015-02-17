@@ -20,11 +20,11 @@ int EdgePadMover::checkMove(Board *board, int r1, int c1, int r2, int c2)
     NumPad *pad1 = board->getNumPad(r1, c1);
     NumPad *pad2 = board->getNumPad(r2, c2);
 
-    if(pad1->mNum == 0) return -1;
+    if(pad1->getNum() == 0) return -1;
 
-    if(pad2->mNum == 0) {
-        board->setNum(r2, c2, pad1->mNum);
-        board->setNum(r1, c1, 0);
+    if(pad2->getNum() == 0) {
+        pad2->setNum(pad1->getNum());
+        pad1->setNum(0);
         return 0;
     }
 

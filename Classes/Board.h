@@ -25,7 +25,7 @@ class Board {
         void reset();
         int getSize() { return mSize; };
         NumPad *getNumPad(int row, int col) { return mBoard[row][col]; }
-        void setNum(int row, int col, int val) { mBoard[row][col]->mNum = val; }
+        //void setNum(int row, int col, int val) { mBoard[row][col]->mNum = val; }
         void setMover(PadMover *mover);
         /* merge two NumPad into one by adding d into m. 
            And then d will be removed */

@@ -65,7 +65,9 @@ int Board::moveDown()
 
 bool Board::tryMerge(NumPad *m, NumPad *d)
 {
-    if(m->mNum == d->mNum && m->mNum != 0) return true;
+    int mnum = m->getNum();
+    int dnum = d->getNum();
+    if(mnum == dnum && mnum != 0) return true;
     return false;
 }
 
@@ -73,8 +75,8 @@ int Board::merge(NumPad *m, NumPad *d)
 {
     if(tryMerge(m, d))
     {
-        m->mNum += d->mNum;
-        d->mNum = 0;
+        m->setNum(m->getNum() + d->getNum());
+        d->setNum(0);
 
         return 2;
     }
@@ -96,7 +98,7 @@ bool Board::isFinish()
     // this method should be invoked after isFull check
     for(int r = 0 ; r < mSize ; r++) {
         for(int c = 1 ; c < mSize ; c++) {
-            if(mBoard[r][c]->mNum == mBoard[r][c-1]->mNum) {
+            if(mBoard[r][c]->getNum() == mBoard[r][c-1]->getNum()) {
                 finish = false;
                 break;
             }
@@ -105,7 +107,7 @@ bool Board::isFinish()
 
     for(int c = 0 ; c < mSize ; c++) {
         for(int r = 1 ; r < mSize ; r++) {
-            if(mBoard[r][c]->mNum == mBoard[r-1][c]->mNum) {
+            if(mBoard[r][c]->getNum() == mBoard[r-1][c]->getNum()) {
                 finish = false;
                 break;
             }
@@ -120,7 +122,7 @@ bool Board::isFull()
 
     for(int i = 0 ; i < mSize ; i++) {
         for(int j = 0 ; j < mSize ; j++) {
-            if(mBoard[i][j]->mNum == 0) {
+            if(mBoard[i][j]->getNum() == 0) {
                 full = false;
                 break;
             }

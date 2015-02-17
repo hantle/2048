@@ -15,6 +15,7 @@ class EasyPadGen : public PadGen {
             // EasyPadGen always create minimum number at random pos.
             int size = board->getSize();
             int r, c;
+            NumPad *pad = 0;
 
             srand(time(NULL));
             while(true) 
@@ -22,13 +23,14 @@ class EasyPadGen : public PadGen {
                 r = rand() % size;
                 c = rand() % size;
 
-                const NumPad *pad = board->getNumPad(r, c);
+                pad = board->getNumPad(r, c);
 
-                if(pad->mNum == 0)
+                if(pad->getNum() == 0)
                     break;
             }
             printf("genPad at (%d, %d)\n", r, c);
-            board->setNum(r, c, 2);
+            if(pad != 0)
+                pad->setNum(2);
         };
 };
 
