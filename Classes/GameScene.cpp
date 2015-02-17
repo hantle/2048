@@ -69,11 +69,6 @@ bool GameScene::init()
     button2->setContentSize(Size(visibleSize.width/3, 100));
     this->addChild(button2);
     
-//    auto background = ui::Scale9Sprite::create(Rect(10, 10, 12, 12), "button64.png");
-//    background->setAnchorPoint(Point(0, 0));
-//    background->setContentSize(Size(130 * 4 + 10, 130 * 4 + 10));
-//    background->setPosition(<#const cocos2d::Vec2 &position#>)
-    
     backgroundLayer = LayerColor::create(kColorBackground);
     backgroundLayer->setContentSize(Size(visibleSize.width - 40, visibleSize.width - 40));
     backgroundLayer->setPosition(visibleSize.width/2 - backgroundLayer->getContentSize().width/2, visibleSize.height/2 - 50 - backgroundLayer->getContentSize().height/2);
@@ -113,7 +108,6 @@ void GameScene::initPad()
         grid->setAnchorPoint(Point(0, 0));
         grid->setContentSize(Size(512 / size, 512 / size));
         grid->setPosition(x, y);
-        grid->setColor(kColorBackgroundGrid);
         backgroundLayer->addChild(grid);
 
         int num = pad->getNum();
@@ -133,7 +127,6 @@ void GameScene::drawPad(float dt)
     for (int i = 0; i < size * size; i++) {
         NumPad *pad = board->getNumPad(i/size, i%size);
         auto grid = pad->getSprite();
-        grid->setColor(kColorBackgroundGrid);
 
         int num = pad->getNum();
         auto label = pad->getLabel();
