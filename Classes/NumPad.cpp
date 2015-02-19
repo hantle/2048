@@ -58,3 +58,21 @@ void NumPad::setNum(int num)
     else if(num >= (int)pow(2, 9))
         padSprite->setColor(kColorGrid9);
 }
+
+void NumPad::setAniType(AniType::Type type)
+{
+    if(type == AniType::NONE) {
+    } else if(type == AniType::GEN) {
+        padSprite->setOpacity(0);
+        padSprite->runAction(FadeIn::create(1));
+    } else if(type == AniType::MOVE) {
+    } else if(type == AniType::BLOCKED) {
+    } else if(type == AniType::MERGED) {
+        //
+    } else if(type == AniType::MERGING) {
+        //padSprite->runAction(TintTo::create(1,
+                    //kColorBackgroundGrid.r,
+                    //kColorBackgroundGrid.g,
+                    //kColorBackgroundGrid.b));
+    }
+}
