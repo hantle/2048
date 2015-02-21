@@ -13,11 +13,14 @@
 #include "CocosGUI.h"
 #include "MenuScene.h"
 #include "Board.h"
+#include "UndoManager.h"
 
 class GameScene : public cocos2d::Layer
 {
     private:
         Board *board;
+        UndoManager *undoManager;
+
         Layer *backgroundLayer;
     public:
         static cocos2d::Scene* createScene();

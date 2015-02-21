@@ -19,6 +19,15 @@ Board::Board(int size)
     }
 }
 
+Board::Board(Board &board)
+{
+    mMover = board.mMover;
+    mGen = board.mGen;
+
+    mPoint = board.getPoint();
+    mSize = board.getSize();
+}
+
 Board::~Board()
 {
     //
@@ -39,6 +48,22 @@ void Board::setMover(PadMover *mover)
 void Board::setGen(PadGen *gen)
 {
     mGen = gen;
+}
+
+Board::State::State(Board *b)
+{
+    this->mPoint = b->mPoint;
+    this->mSize = b->mSize;
+}
+
+Board::State *Board::getState() 
+{
+    return new Board::State(this);
+}
+
+void Board::setState(Board::State *bs)
+{
+    //
 }
 
 bool Board::moveLeft()

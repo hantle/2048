@@ -2,20 +2,23 @@
 #define __UNDOMANAGER_H__
 
 #include <vector>
-#include "BoardState.h"
+#include "Board.h"
 
 #define MAX_UNDO 5
 
 class UndoManager {
     private:
-        std::vector<BoardState> mState;
+        std::vector<Board::State *> mState;
         int mMax;
 
     public:
         UndoManager() { mMax = MAX_UNDO; };
-        BoardState popState();
-        void putState(BoardState state);
+        Board::State *popState();
+        void putState(Board::State *state);
+        void clear();
         int getUndoCount() { return mMax; }
+
+        ~UndoManager();
 };
 
 #endif // __UNDOMANAGER_H__

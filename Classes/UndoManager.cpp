@@ -1,9 +1,12 @@
 #include "UndoManager.h"
-#include "BoardState.h"
 
-BoardState UndoManager::popState()
+UndoManager::~UndoManager()
 {
-    BoardState ret;
+}
+
+Board::State *UndoManager::popState()
+{
+    Board::State *ret;
     mMax--;
 
     ret = mState.back();
@@ -11,7 +14,7 @@ BoardState UndoManager::popState()
     return ret;
 }
 
-void UndoManager::putState(BoardState state)
+void UndoManager::putState(Board::State *state)
 {
     if(mMax == 0) return;
 
@@ -25,3 +28,7 @@ void UndoManager::putState(BoardState state)
     mState.push_back(state);
 }
 
+void UndoManager::clear()
+{
+    mState.clear();
+}

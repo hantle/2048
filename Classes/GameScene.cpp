@@ -46,6 +46,15 @@ bool GameScene::init()
     board->setMover(eMover);
     board->reset();
 
+    // create UndoManager & save initial state
+    if(undoManager)
+    {
+        delete undoManager;
+    }
+
+    undoManager = new UndoManager();
+    undoManager->putState(board->getState());
+
     glClearColor(81.0/255.0, 192.0/255.0, 201.0/255.0, 1.0);
     
     Size visibleSize = Director::getInstance()->getVisibleSize();
@@ -164,6 +173,9 @@ void GameScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
     if(isGameOver) {
         printf("Game Over!!!\n");
         // do something
+    } else {
+        // save state
+        undoManager->putState(board->getState());
     }
 }
 

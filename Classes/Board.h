@@ -8,6 +8,18 @@
 typedef NumPad* pNumPad;
 
 class Board {
+    public:
+        class State {
+            private:
+                int mPoint;
+                int mSize;
+                int **mPad;
+
+                State() {};
+            public:
+                State(Board *b);
+                State(State &s);
+        };
     private:
         pNumPad **mBoard;
         int mSize;
@@ -25,9 +37,15 @@ class Board {
         static int BASE;
 
         Board(int size);
+        Board(Board &board);
+
         void reset();
         int getSize() { return mSize; };
         int getPoint() { return mPoint; };
+
+        Board::State *getState();
+        void setState(Board::State *bs);
+
         NumPad *getNumPad(int row, int col) { return mBoard[row][col]; }
         //void setNum(int row, int col, int val) { mBoard[row][col]->mNum = val; }
         void setMover(PadMover *mover);
