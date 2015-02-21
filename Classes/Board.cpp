@@ -41,28 +41,48 @@ void Board::setGen(PadGen *gen)
     mGen = gen;
 }
 
-int Board::moveLeft()
+bool Board::moveLeft()
 {
-    if(mMover == 0) return 0;
-    return mMover->moveLeft(this);
+    if(mMover == 0) return false;
+
+    int point = mMover->moveLeft(this);
+    if(point == -1) return false;
+
+    mPoint += point;
+    return true;
 }
 
-int Board::moveRight()
+bool Board::moveRight()
 {
-    if(mMover == 0) return 0;
-    return mMover->moveRight(this);
+    if(mMover == 0) return false;
+
+    int point = mMover->moveRight(this);
+    if(point == -1) return false;
+
+    mPoint += point;
+    return true;
 }
 
-int Board::moveUp()
+bool Board::moveUp()
 {
-    if(mMover == 0) return 0;
-    return mMover->moveUp(this);
+    if(mMover == 0) return false;
+
+    int point = mMover->moveUp(this);
+    if(point == -1) return false;
+
+    mPoint += point;
+    return true;
 }
 
-int Board::moveDown()
+bool Board::moveDown()
 {
-    if(mMover == 0) return 0;
-    return mMover->moveDown(this);
+    if(mMover == 0) return false;
+
+    int point = mMover->moveDown(this);
+    if(point == -1) return false;
+
+    mPoint += point;
+    return true;
 }
 
 bool Board::tryMerge(NumPad *m, NumPad *d)

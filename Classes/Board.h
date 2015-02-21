@@ -11,6 +11,7 @@ class Board {
     private:
         pNumPad **mBoard;
         int mSize;
+        int mPoint;
         PadMover *mMover;
         PadGen *mGen;
 
@@ -26,16 +27,17 @@ class Board {
         Board(int size);
         void reset();
         int getSize() { return mSize; };
+        int getPoint() { return mPoint; };
         NumPad *getNumPad(int row, int col) { return mBoard[row][col]; }
         //void setNum(int row, int col, int val) { mBoard[row][col]->mNum = val; }
         void setMover(PadMover *mover);
         /* merge two NumPad into one by adding d into m. 
            And then d will be removed */
         int merge(NumPad *m, NumPad *d);
-        int moveLeft();
-        int moveRight();
-        int moveUp();
-        int moveDown();
+        bool moveLeft();
+        bool moveRight();
+        bool moveUp();
+        bool moveDown();
         void setGen(PadGen *gen);
 
         // should be called after move

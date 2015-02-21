@@ -133,32 +133,33 @@ bool GameScene::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event
 void GameScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event)
 {
     bool isGameOver = false;
-    int point = 0;
     if(keyCode == cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW)
     {
         printf("Left Arrow Key released.\n");
-        point = board->moveLeft();
-        // if point == -1 then no gen
-        isGameOver = !(board->doNext((point == -1) ? false : true));
+        bool gen = board->moveLeft();
+        isGameOver = !(board->doNext(gen));
     }
     else if(keyCode == cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
     {
         printf("Right Arrow Key released.\n");
-        point = board->moveRight();
-        isGameOver = !(board->doNext((point == -1) ? false : true));
+        bool gen = board->moveRight();
+        isGameOver = !(board->doNext(gen));
     }
     else if(keyCode == cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW)
     {
         printf("Up Arrow Key released.\n");
-        point = board->moveUp();
-        isGameOver = !(board->doNext((point == -1) ? false : true));
+        bool gen = board->moveUp();
+        isGameOver = !(board->doNext(gen));
     }
     else if(keyCode == cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW)
     {
         printf("Down Arrow Key released.\n");
-        point = board->moveDown();
-        isGameOver = !(board->doNext((point == -1) ? false : true));
+        bool gen = board->moveDown();
+        isGameOver = !(board->doNext(gen));
     }
+
+    int point = board->getPoint();
+    // update point;
 
     if(isGameOver) {
         printf("Game Over!!!\n");
