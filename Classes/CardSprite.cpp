@@ -35,11 +35,14 @@ int CardSprite::getNumber()
 {
     return number;
 }
-
-void CardSprite::setNumber(int num)
-{
-    number = num;
-    
+void CardSprite::setNumber(int num, bool animated) {
+    if (animated) {
+        auto scaleSequence = Sequence::create(ScaleTo::create(0.4, 1.2), ScaleTo::create(0.4, 1.0), NULL);
+        labelCardNumber->runAction(scaleSequence);
+    }
+    this->setNumber(num);
+}
+void CardSprite::ChangeLabel(int num) {
     if (num > 0) {
         labelCardNumber->setString(__String::createWithFormat("%i", number)->getCString());
         
@@ -81,6 +84,17 @@ void CardSprite::setNumber(int num)
     } else if (number == 2048) {
         colorBackground->setColor(Color3B(0, 130, 0));
     }
+}
+void CardSprite::setNumber(int num)
+{
+    
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    
+    number = num;
+    
+//    this->runAction(Sequence::create(MoveBy::create(0.3, Point(-(visibleSize.width-36)/4, 0)), MoveBy::create(0, Point(visibleSize.width/4, 0)), NULL));//, CallFunc::create(CC_CALLBACK_0(GameScene::doLeftCallback, this, x, y, x1)), NULL));
+    this->runAction(Sequence::create(DelayTime::create(0.3), CallFunc::create(CC_CALLBACK_0(CardSprite::ChangeLabel, this, number)), NULL));
+//    this->ChangeLabel(num);
 }
 
 void CardSprite::cardInit(int number, int width, int height, float x, float y)

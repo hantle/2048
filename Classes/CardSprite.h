@@ -22,6 +22,8 @@ public:
     
     int getNumber();
     void setNumber(int num);
+    void setNumber(int num, bool animated);
+    void ChangeLabel(int number) ;
 private:
     int number;
     void cardInit(int number, int width, int height, float x, float y);
