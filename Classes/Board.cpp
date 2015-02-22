@@ -123,10 +123,11 @@ int Board::merge(NumPad *m, NumPad *d)
     if(tryMerge(m, d))
     {
         int pt = m->getNum() + d->getNum();
-        d->setNum(0);
-        m->setNum(pt);
+        //d->setNum(0);
+        //m->setNum(pt);
 
-        d->setAni(AniType::MERGING, 0);
+        //d->setAni(AniType::MERGING, 0);
+        m->setAni(AniType::MERGED, d);
         return pt;
     }
 

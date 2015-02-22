@@ -9,20 +9,13 @@ class Board;
 
 // Egde means this PadMover move all pad to end to end
 // but, now only move one for testing
-class EdgePadMover : public PadMover {
+class EasyPadMover : public PadMover {
     private:
-        enum Dir{
-            LEFT,
-            RIGHT,
-            UP,
-            DOWN
-        };
-
-        int checkMove(Board *board, int r1, int c1, Dir dir);
+        int checkMove(Board *board, int r1, int c1, int r2, int c2);
         int calcPoint(int point, bool move);
 
 	public:
-        EdgePadMover() {};
+        EasyPadMover() {};
 
 		int moveLeft(Board *board);
 		int moveRight(Board *board);
@@ -30,7 +23,7 @@ class EdgePadMover : public PadMover {
         int moveDown(Board *board);
 
     protected:
-        ~EdgePadMover() {};
+        ~EasyPadMover() {};
 };
 
 #endif // __EDGEPADMOVER_H__

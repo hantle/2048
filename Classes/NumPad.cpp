@@ -66,7 +66,7 @@ void NumPad::setAni(AniType::Type type, NumPad *from)
     if(type == AniType::NONE) {
     } else if(type == AniType::GEN) {
         padSprite->setOpacity(0);
-        padSprite->runAction(FadeIn::create(0.5));
+        padSprite->runAction(Sequence::create(DelayTime::create(0.2), FadeIn::create(0.3), NULL));
     } else if(type == AniType::MOVE) {
         auto pad = from->getSprite();
         auto num = from->getLabel();
@@ -82,18 +82,21 @@ void NumPad::setAni(AniType::Type type, NumPad *from)
 
         this->setNum(n);
         numSprite->setPosition(numVec);
-        numSprite->runAction(MoveTo::create(0.3, *new Vec2(oriNumVec)));
+        numSprite->runAction(MoveTo::create(0.2, *new Vec2(oriNumVec)));
 
         padSprite->setPosition(padVec);
-        padSprite->runAction(MoveTo::create(0.3, *new Vec2(oriPadVec)));
+        padSprite->runAction(MoveTo::create(0.2, *new Vec2(oriPadVec)));
 
     } else if(type == AniType::BLOCKED) {
     } else if(type == AniType::MERGED) {
-        //
+        int n = from->getNum();
+        from->setNum(0);
+
+        this->setNum(mNum + n);
+        // float scale = padSprite->getScale() ...
+        padSprite->runAction(Sequence::create(
+                    ScaleTo::create(0.2, 1.2), ScaleTo::create(0.2, 1.0), NULL));
+
     } else if(type == AniType::MERGING) {
-        //padSprite->runAction(TintTo::create(1,
-                    //kColorBackgroundGrid.r,
-                    //kColorBackgroundGrid.g,
-                    //kColorBackgroundGrid.b));
     }
 }

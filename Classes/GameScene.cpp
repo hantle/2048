@@ -10,6 +10,7 @@
 #include "Define.h"
 #include "Board.h"
 #include "EasyPadGen.h"
+//#include "EasyPadMover.h"
 #include "EdgePadMover.h"
 
 USING_NS_CC;
@@ -41,9 +42,10 @@ bool GameScene::init()
     
     board = new Board(Board::_4BY4);
     EasyPadGen *eGen = new EasyPadGen();
-    EdgePadMover *eMover = new EdgePadMover();
+    //EasyPadMover *eMover = new EasyPadMover();
+    EdgePadMover *edgeMover = new EdgePadMover();
     board->setGen(eGen);
-    board->setMover(eMover);
+    board->setMover(edgeMover);
     board->reset();
 
     // create UndoManager & save initial state
@@ -108,13 +110,13 @@ void GameScene::initPad()
 {
     int size = board->getSize();
     for (int i = 0; i < size * size; i++) {
-        int x = 44+(512/size + 2)*(i%size);
-        int y = 44+(512/size + 2)*(i/size);
+        int x = 88+(512/size + 4)*(i%size);
+        int y = 88+(512/size + 4)*(i/size);
 
         // default grid
         auto dgrid = ui::Scale9Sprite::create(Rect(10, 10, 12, 12), "button64.png");
         dgrid->setColor(kColorBackgroundGrid);
-        dgrid->setAnchorPoint(Point(0, 0));
+        dgrid->setAnchorPoint(Point(0.5, 0.5));
         dgrid->setContentSize(Size(512 / size, 512 / size));
         dgrid->setPosition(x, y);
         backgroundLayer->addChild(dgrid);
@@ -122,7 +124,7 @@ void GameScene::initPad()
         NumPad *pad = board->getNumPad(i/size, i%size);
         auto grid = pad->getSprite();
 
-        grid->setAnchorPoint(Point(0, 0));
+        grid->setAnchorPoint(Point(0.5, 0.5));
         grid->setContentSize(Size(512 / size, 512 / size));
         grid->setPosition(x, y);
         backgroundLayer->addChild(grid, 1);
@@ -132,7 +134,8 @@ void GameScene::initPad()
         if(num != 0) {
             label->setString(String::createWithFormat("%d", num)->getCString());
         }
-        label->setPosition(x+512/size/2, y+512/size/2);
+        label->setAnchorPoint(Point(0.5, 0.5));
+        label->setPosition(x, y);
         backgroundLayer->addChild(label, 1);
     }
 }
