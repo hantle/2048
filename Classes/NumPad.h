@@ -26,7 +26,7 @@ class NumPad {
         int getNum() const { return mNum; }
         void setNum(int num);
         AniType::Type getAniType() const { return aniType; };
-        void setAniType(AniType::Type type);
+        void setAni(AniType::Type type, NumPad *from);
     public:
         ~NumPad();
 };

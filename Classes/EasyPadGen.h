@@ -31,7 +31,7 @@ class EasyPadGen : public PadGen {
             printf("genPad at (%d, %d)\n", r, c);
             if(pad != 0)
             {
-                pad->setAniType(AniType::GEN);
+                pad->setAni(AniType::GEN, 0);
                 pad->setNum(Board::BASE);
             }
         };

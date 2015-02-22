@@ -111,13 +111,21 @@ void GameScene::initPad()
         int x = 44+(512/size + 2)*(i%size);
         int y = 44+(512/size + 2)*(i/size);
 
+        // default grid
+        auto dgrid = ui::Scale9Sprite::create(Rect(10, 10, 12, 12), "button64.png");
+        dgrid->setColor(kColorBackgroundGrid);
+        dgrid->setAnchorPoint(Point(0, 0));
+        dgrid->setContentSize(Size(512 / size, 512 / size));
+        dgrid->setPosition(x, y);
+        backgroundLayer->addChild(dgrid);
+
         NumPad *pad = board->getNumPad(i/size, i%size);
         auto grid = pad->getSprite();
 
         grid->setAnchorPoint(Point(0, 0));
         grid->setContentSize(Size(512 / size, 512 / size));
         grid->setPosition(x, y);
-        backgroundLayer->addChild(grid);
+        backgroundLayer->addChild(grid, 1);
 
         int num = pad->getNum();
         auto label = pad->getLabel();
@@ -125,7 +133,7 @@ void GameScene::initPad()
             label->setString(String::createWithFormat("%d", num)->getCString());
         }
         label->setPosition(x+512/size/2, y+512/size/2);
-        backgroundLayer->addChild(label);
+        backgroundLayer->addChild(label, 1);
     }
 }
 

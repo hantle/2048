@@ -22,9 +22,12 @@ int EdgePadMover::checkMove(Board *board, int r1, int c1, int r2, int c2)
 
     if(pad1->getNum() == 0) return -1;
 
+    // move
+    // from pad1 to pad2
     if(pad2->getNum() == 0) {
-        pad2->setNum(pad1->getNum());
-        pad1->setNum(0);
+        pad2->setAni(AniType::MOVE, pad1);
+        //pad2->setNum(pad1->getNum());
+        //pad1->setNum(0);
         return 0;
     }
 
